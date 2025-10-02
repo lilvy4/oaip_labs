@@ -37,6 +37,12 @@ int main()
                 printf("%s%f%s", "cos(x) = ", cosX, "\n");
                 break;
             }
+            }
+        }
+        else if (ans == 'n') break;
+        else {
+            printf("введите один из предложенных ответов\n");
+            continue;
         }
     }
 }
