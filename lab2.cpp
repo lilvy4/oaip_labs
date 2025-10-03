@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <locale>
 
 void init_array(int array[], int size)                                             //функция ввода массива
@@ -33,21 +33,27 @@ int main()
     setlocale(LC_ALL, "Rus");
     while (1)
     {
-        int length;                                                                                         //длина массива
+        int length;                                                                                        //длина массива
         printf("%s", "Введите длину массива ");
         scanf_s("%d", &length);
+        int err = 0;                                                                                       //код ошибки(0 или 1)
+        int* sequence = (int*)malloc(length * sizeof(int));                                                //выделение памяти под динамические массивы
+        int* decoded = (int*)malloc(length * sizeof(int));
+        char answer;                                                                                       //переменная для ответа пользователя
         if (length % 3 != 0)                                                                               //проверка на кратность 3
         {
             printf("%s", "Длина массива должна быть кратна 3\n");
             continue;
         }
-        int* sequence = (int*) malloc(length * sizeof(int));                                              //выделение памяти под динамические массивы
-        int* decoded = (int*) malloc(length * sizeof(int));
-        char answer;                                                                                     //переменная для ответа пользователя
         printf("%s", "Введите массив ");
         init_array(sequence, length);                                                                    //ввод массива
-        if (decode_sequence(sequence, length, decoded) == 0) print_array(decoded, length / 3);           //проверка на ввод 0 или 1
-        else printf("%s", "Введите 0 или 1");
+        err = decode_sequence(sequence, length, decoded);                                                //расшифровка массива с возвращением кода ошибки
+        if (err == 0) print_array(decoded, length / 3);                                                  //проверка на ввод 0 или 1
+        else
+        {
+            printf("%s", "Нужно вводить 0 или 1\n");
+            continue;
+        }
         free(sequence);                                                                                  //освобождение памяти
         free(decoded);
         printf("%s", "\nЖелаете продолжить?(y/n) ");
